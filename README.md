@@ -14,11 +14,12 @@ const { Connection, constants, ApiClient } = require('apple-api');
   const conn = new Connection('localhost:26660', {
     cert: readFileSync('private_daemon.crt'),
     key: readFileSync('private_daemon.key'),
+    coin: 'apple'
   });
   conn.onMessage((message) => {
     console.log(message);
   });
-  conn.addService(constants.SERVICE().walletUi);
+  conn.addService(constants.SERVICE('apple').walletUi);
   const fullNode = new ApiClient.FullNode({ connection: conn, origin: 'my-cool-service' });
   await fullNode.init();
   const blockchainState = await fullNode.getBlockchainState();
